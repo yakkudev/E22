@@ -1,0 +1,9 @@
+
+<footer>
+    <% if (sessionData?.token) { %>
+        <b>session token: <%= sessionData.token %></b><br>
+        <a href="/logout">horse out :(</a>
+    <% } %>
+</footer>
+</body>
+</html>

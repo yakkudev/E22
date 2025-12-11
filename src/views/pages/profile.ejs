@@ -1,0 +1,11 @@
+<%- include('../partials/header') %>
+
+<h2>@<%= user.handle %></h2>
+
+<% if (sessionData?.userId == user._id) { %>
+    <form action="/horse/<%= user.handle %>/delete" method="post">
+        <button type="submit">delete horse..</button>
+    </form>
+<% } %>
+
+<%- include('../partials/footer') %>
