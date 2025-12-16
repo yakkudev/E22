@@ -1,5 +1,8 @@
 hey twin
-run `docker run`
-should work
-i think
+run `docker compose up`
+should work i think
 peace
+
+ps:
+`docker compose up mongo`
+for mongodb only
