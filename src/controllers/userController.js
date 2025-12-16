@@ -1,51 +1,41 @@
 const model = require('../models/userModel')
 
-const SESSION_TOKEN_COOKIE = 'SESSION_TOKEN'
-const USERID_COOKIE = 'USER_ID'
-
-const sessionData = (req) => {
-    const token = req.cookies[SESSION_TOKEN_COOKIE]
-    const userId = req.cookies[USERID_COOKIE]
-    if (token && userId) return { token, userId }
-    return null
-}
+const {
+    SESSION_TOKEN_COOKIE,
+    USER_ID_COOKIE,
+} = require('../middleware/sessionManager')
 
 // todo: fix ts ugly mess
 async function getRoot(req, res) {
-    const session = sessionData(req)
-    if (session) {
-        const user = await model.getUserByIdUnsafe(session.userId)
-        if (user.session === session.token) {
-            res.redirect(`/horse/${user.handle}`)
-            return
-        }
+    if (!req.authenticated) {
+        res.clearCookie(SESSION_TOKEN_COOKIE)
+        res.clearCookie(USER_ID_COOKIE)
+        return res.redirect('/register')
     }
 
-    res.clearCookie(SESSION_TOKEN_COOKIE)
-    res.clearCookie(USERID_COOKIE)
-    res.redirect('/register')
+    res.redirect(`/horse/${req.user.handle}`)
 }
 
 async function getRegister(req, res) {
-    res.render('pages/landing', { sessionData: sessionData(req) })
+    res.render('pages/landing', { sessionData: null })
 }
 
 async function postRegister(req, res) {
     const newId = (await model.newUser({ handle: req.body.handle }))?.insertedId
     if (!newId) {
-        res.status(300).redirect('/register')
-        return
+        return res.status(300).redirect('/register')
     }
 
-    const user = await model.getUserByIdUnsafe(newId)
+    const user = await model.getUserByIdRisky(newId)
     console.log('created new horse:', JSON.stringify(user))
+
     res.cookie(SESSION_TOKEN_COOKIE, user.session, { maxAge: 1000 * 60 * 10 })
-    res.cookie(USERID_COOKIE, user._id, { maxAge: 1000 * 60 * 10 })
+    res.cookie(USER_ID_COOKIE, user._id, { maxAge: 1000 * 60 * 10 })
     res.redirect('/')
 }
 
 async function getLogin(req, res) {
-    res.render('pages/login', { sessionData: sessionData(req) })
+    res.render('pages/login', { sessionData: null })
 }
 
 async function postLogin(req, res) {
@@ -57,48 +47,48 @@ async function postLogin(req, res) {
 
     await model.resetUserSession(user._id)
     // get new session
-    user = await model.getUserByIdUnsafe(user._id)
+    user = await model.getUserByIdRisky(user._id)
     res.cookie(SESSION_TOKEN_COOKIE, user.session, { maxAge: 1000 * 60 * 10 })
-    res.cookie(USERID_COOKIE, user._id, { maxAge: 1000 * 60 * 10 })
+    res.cookie(USER_ID_COOKIE, user._id, { maxAge: 1000 * 60 * 10 })
     res.redirect('/')
 }
 
 async function getLogout(req, res) {
     res.clearCookie(SESSION_TOKEN_COOKIE)
-    res.clearCookie(USERID_COOKIE)
+    res.clearCookie(USER_ID_COOKIE)
     res.redirect('/')
 }
 
 async function getProfile(req, res) {
+    if (!req.authenticated) return res.redirect('/')
+
     const user = await model.getUserByHandle(req.params.handle)
-    res.render('pages/profile', { user, sessionData: sessionData(req) })
+    res.render('pages/profile', { user, sessionData: req.session })
 }
 
 async function getEditUser(req, res) {
+    if (!req.authenticated || !req.user?.handle !== req.params.handle)
+        return res.redirect('/')
+
+    // todo
     const user = await model.getUserByHandle(req.params.handle)
     res.redirect('/')
 }
 
 async function postEditUser(req, res) {
+    if (!req.authenticated || !req.user?.handle !== req.params.handle)
+        return res.redirect('/')
+
+    // todo
     const handle = req.params.handle
     res.redirect('/')
 }
 
-// todo: clean up ts ugly ass code
-// also: do a permissions check in a function
 async function postDeleteUser(req, res) {
-    const session = sessionData(req)
-    if (!session) {
-        res.redirect('/')
-        return
-    }
-    const user = await model.getUserByHandleUnsafe(req.params.handle)
-    if (session.token !== user.session) {
-        res.redirect('/')
-        return
-    }
+    if (!req.authenticated || !req.user?.handle !== req.params.handle)
+        return res.redirect('/')
 
-    await model.deleteUser(user._id)
+    await model.deleteUser(req.user._id)
     res.redirect('/logout')
 }
 

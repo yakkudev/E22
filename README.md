@@ -2,6 +2,7 @@
 basically twitter for horses 🐎🐴
 
 todo:
+search horses
 password validation
 posting
 timeline
@@ -10,3 +11,4 @@ profile edit
 delete account
 profile view
 horsing around
+horse sfx

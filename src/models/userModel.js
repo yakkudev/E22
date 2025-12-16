@@ -5,12 +5,12 @@ const fromUsers = () => getDB().collection('users')
 
 const generateSessionToken = () => crypto.randomUUID()
 
-// unsafe functions dont exclude session token
-async function getUserByIdUnsafe(id) {
+// risky functions dont omit ANY DATA (incl session token)
+async function getUserByIdRisky(id) {
     return await fromUsers().findOne({ _id: new ObjectId(id) })
 }
 
-async function getUserByHandleUnsafe(handle) {
+async function getUserByHandleRisky(handle) {
     return await fromUsers().findOne({ handle })
 }
 
@@ -47,9 +47,9 @@ async function deleteUser(id) {
 
 module.exports = {
     getAllUsers,
-    getUserByIdUnsafe,
+    getUserByIdRisky,
     getUserByHandle,
-    getUserByHandleUnsafe,
+    getUserByHandleRisky,
     resetUserSession,
     newUser,
     deleteUser,
