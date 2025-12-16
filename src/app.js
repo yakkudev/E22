@@ -1,17 +1,16 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const router = require('./routes/mainRouter');
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const router = require('./routes/mainRouter')
 
-const app = express();
+const app = express()
 
-app.set('view engine', 'ejs');
-app.set('views', './src/views');
+app.set('view engine', 'ejs')
+app.set('views', './src/views')
 
-
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(cookieParser())
-app.use('/', router);
+app.use('/', router)
 
-module.exports = app;
+module.exports = app
