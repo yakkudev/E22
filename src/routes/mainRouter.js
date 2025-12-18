@@ -25,4 +25,15 @@ router.get('/api/post/:post', postController.api.getPost)
 router.post('/api/post/new', postController.api.postNewPost)
 router.post('/api/post/:post/delete', postController.api.postDeletePost)
 
+// error 500
+router.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke')
+})
+
+// error 404
+router.use((req, res, next) => {
+    res.status(404).send('Not found')
+})
+
 module.exports = router

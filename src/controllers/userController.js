@@ -60,10 +60,11 @@ async function getLogout(req, res) {
     res.status(300).redirect('/')
 }
 
-async function getProfile(req, res) {
+async function getProfile(req, res, next) {
     if (!req.authenticated) return res.status(403).redirect('/')
 
     const user = await userModel.getUserByHandle(req.params.handle)
+    if (!user) return next()
 
     res.status(200).render('pages/profile', {
         user,
