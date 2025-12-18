@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
+const postController = require('../controllers/postController')
 
+// handled by user controller
 router.get('/', userController.getRoot)
 router.get('/register', userController.getRegister)
 router.post('/register', userController.postRegister)
@@ -15,5 +17,12 @@ router.get('/horse/:handle/edit', userController.getEditUser)
 router.post('/horse/:handle/edit', userController.postEditUser)
 
 router.post('/horse/:handle/delete', userController.postDeleteUser)
+
+// handled by post controller
+router.get('/horse/:handle/post/:post', postController.getPostView)
+
+router.get('/api/post/:post', postController.api.getPost)
+router.post('/api/post/new', postController.api.postNewPost)
+router.post('/api/post/:post/delete', postController.api.postDeletePost)
 
 module.exports = router

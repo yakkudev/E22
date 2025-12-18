@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+
+<% if (sessionData?.userId == postData.post.userId) { %>
+    <magicform action="/api/post/<%= postData.post._id %>/delete" method="POST" onresponse="refresh">
+        <button type="submit">delete post</button>
+    </magicform>
+<% } %>
+
+<div class="post" post-id="<%= postData.post._id %>">
+</div>
+
+<%- include('../partials/footer') %>

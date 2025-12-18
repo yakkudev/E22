@@ -1,0 +1,41 @@
+:root {
+    --text: #ecebdf;
+    --bg: #110909;
+    --bg-alt: hsl(0, 31%, 10%);
+    --primary: #d7d0a2;
+    --secondary: #327632;
+    --accent: #70c289;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    color-scheme: dark;
+}
+
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: var(--secondary)
+}
+
+.post {
+    background-color: var(--bg);
+    border: 1px solid var(--secondary);
+}
+
+.post-mini {
+    padding: 0.25em 1em;
+    border-inline: 2px solid var(--secondary);
+    background-color: var(--bg);
+}
+
+.post-mini:hover {
+    background-color: var(--bg-alt);
+}
+
+.post-form {
+    border: 1px solid var(--secondary);
+}

@@ -3,9 +3,20 @@
 <h2>@<%= user.handle %></h2>
 
 <% if (sessionData?.userId == user._id) { %>
-    <form action="/horse/<%= user.handle %>/delete" method="post">
+    <%- include('../partials/postForm') %>
+
+    <form action="/horse/<%= user.handle %>/delete" method="POST">
         <button type="submit">delete horse..</button>
     </form>
+<% } %>
+
+<% if (user.posts) { %>
+    <% for (post of user.posts) { %>
+        <a href="/horse/<%= user.handle %>/post/<%= post %>">
+            <div class="post-mini" post-id="<%= post %>">
+            </div>
+        </a>
+    <% } %>
 <% } %>
 
 <%- include('../partials/footer') %>
