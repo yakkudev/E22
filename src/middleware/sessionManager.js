@@ -12,13 +12,13 @@ const manageSession = async (req, res, next) => {
         return next()
     }
     const user = await model.getUserByIdRisky(userId)
-    if (user && sessionToken !== user.session) {
+    if (user || sessionToken !== user?.session) {
         return next()
     }
 
     req.authenticated = true
     req.user = user
-    req.session = { token: sessionToken, handle: user.handle }
+    req.session = { token: sessionToken, handle: user.handle, userId: userId }
     next()
 }
 

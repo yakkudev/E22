@@ -63,6 +63,7 @@ async function getProfile(req, res) {
     if (!req.authenticated) return res.redirect('/')
 
     const user = await model.getUserByHandle(req.params.handle)
+
     res.render('pages/profile', { user, sessionData: req.session })
 }
 
@@ -85,7 +86,7 @@ async function postEditUser(req, res) {
 }
 
 async function postDeleteUser(req, res) {
-    if (!req.authenticated || !req.user?.handle !== req.params.handle)
+    if (!req.authenticated || req.user?.handle !== req.params.handle)
         return res.redirect('/')
 
     await model.deleteUser(req.user._id)
