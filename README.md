@@ -7,7 +7,6 @@ cross site scripting vulnerabilities
 # todo:
 user handle validation
 replies
-http status codes
 search horses
 password validation
 proper post view

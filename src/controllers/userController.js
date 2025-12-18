@@ -12,14 +12,14 @@ async function getRoot(req, res) {
         res.clearCookie(SESSION_TOKEN_COOKIE)
         res.clearCookie(USER_ID_COOKIE)
 
-        return res.redirect('/register')
+        return res.status(403).redirect('/register')
     }
 
-    res.redirect(`/horse/${req.user.handle}`)
+    res.status(300).redirect(`/horse/${req.user.handle}`)
 }
 
 async function getRegister(req, res) {
-    res.render('pages/landing', { sessionData: null })
+    res.status(200).render('pages/landing', { sessionData: null })
 }
 
 async function postRegister(req, res) {
@@ -32,67 +32,69 @@ async function postRegister(req, res) {
             res.cookie(SESSION_TOKEN_COOKIE, user.session, cookieSettings)
             res.cookie(USER_ID_COOKIE, user._id, cookieSettings)
 
-            res.redirect('/')
+            res.status(300).redirect('/')
         })
         .catch((error) => res.status(300).redirect('/register'))
 }
 
 async function getLogin(req, res) {
-    res.render('pages/login', { sessionData: null })
+    res.status(200).render('pages/login', { sessionData: null })
 }
 
 async function postLogin(req, res) {
     let user = await userModel.getUserByHandle(req.body.handle)
     if (!user) {
-        res.status(300).redirect('/login')
-        return
+        return res.status(300).redirect('/login')
     }
 
     await userModel.resetUserSession(user._id)
     user = await userModel.getUserByIdRisky(user._id)
     res.cookie(SESSION_TOKEN_COOKIE, user.session, cookieSettings)
     res.cookie(USER_ID_COOKIE, user._id, cookieSettings)
-    res.redirect('/')
+    res.status(300).redirect('/')
 }
 
 async function getLogout(req, res) {
     res.clearCookie(SESSION_TOKEN_COOKIE)
     res.clearCookie(USER_ID_COOKIE)
-    res.redirect('/')
+    res.status(300).redirect('/')
 }
 
 async function getProfile(req, res) {
-    if (!req.authenticated) return res.redirect('/')
+    if (!req.authenticated) return res.status(403).redirect('/')
 
     const user = await userModel.getUserByHandle(req.params.handle)
 
-    res.render('pages/profile', { user, sessionData: req.sessionData })
+    res.status(200).render('pages/profile', {
+        user,
+        sessionData: req.sessionData,
+    })
 }
 
 async function getEditUser(req, res) {
     if (!req.authenticated || req.user?.handle !== req.params.handle)
-        return res.redirect('/')
+        return res.status(403).redirect('/')
 
     // todo
     const user = await userModel.getUserByHandle(req.params.handle)
-    res.redirect('/')
+    res.status(300).redirect('/')
 }
 
 async function postEditUser(req, res) {
     if (!req.authenticated || req.user?.handle !== req.params.handle)
-        return res.redirect('/')
+        return res.status(403).redirect('/')
 
     // todo
     const handle = req.params.handle
-    res.redirect('/')
+    res.status(300).redirect('/')
 }
 
 async function postDeleteUser(req, res) {
     if (!req.authenticated || req.user?.handle !== req.params.handle)
-        return res.redirect('/')
+        return res.status(403).redirect('/')
 
     await userModel.deleteUser(req.user._id)
-    res.redirect('/logout')
+    res.status(300).redirect('/logout')
 }
 
 module.exports = {

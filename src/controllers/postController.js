@@ -18,7 +18,7 @@ async function getPostView(req, res) {
         if (!user || !post || !post?.userId.equals(user?._id))
             return res.status(404).redirect(`/horse/${req.params.handle}`)
     } catch (error) {
-        return res.status(500)
+        return res.status(500).send()
     }
 
     res.status(200).render('pages/post', {
