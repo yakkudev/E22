@@ -18,7 +18,15 @@ async function newPost({ userId, content, replyTo }) {
         postDate,
     })
     await userModel.pushPostId(userId, res.insertedId)
+    if (replyTo) await addReply(replyTo, res.insertedId)
     return res
+}
+
+async function addReply(postId, replyId) {
+    return await fromPosts().updateOne(
+        { _id: new ObjectId(postId) },
+        { $push: { replies: { $each: [new ObjectId(replyId)], $position: 0 } } }
+    )
 }
 
 async function deletePost(postId) {

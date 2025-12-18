@@ -9,3 +9,5 @@ function goBack(data, res) {
         history.back()
     }
 }
+
+twemoji.parse(document.body)

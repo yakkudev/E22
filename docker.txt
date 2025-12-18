@@ -6,3 +6,7 @@ peace
 ps:
 `docker compose up mongo`
 for mongodb only
+
+psps:
+mongodb runs on port 27017
+the web server runs on port 3000
