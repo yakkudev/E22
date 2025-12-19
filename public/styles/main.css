@@ -47,10 +47,12 @@ nav h1 {
 }
 
 .nav-right {
-    width: 50%;
+    min-width: fit-content;
+    width: 20%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 main {

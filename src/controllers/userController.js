@@ -5,7 +5,7 @@ const {
     USER_ID_COOKIE,
 } = require('../middleware/sessionManager')
 
-const cookieSettings = { maxAge: 1000 * 60 * 30 }
+const cookieSettings = { maxAge: 1000 * 60 * 60 } // sessions expire after 1h
 
 async function getRoot(req, res) {
     if (!req.authenticated) {

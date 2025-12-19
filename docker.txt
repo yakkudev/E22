@@ -1,6 +1,5 @@
 hey twin
 run `docker compose up`
-should work i think
 peace
 
 ps:
