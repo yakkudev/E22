@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<h1>search for a post</h1>
+<form action="/search" method="GET" onresponse="refresh">
+    <input type="text" name="handle" placeholder="posted by">
+    <input type="text" name="phrase" placeholder="contains phrase">
+    <label>sort by</label>
+    <select name="sort-by">
+        <option value="date">Post date</option>
+        <option value="replies">Number of replies</option>
+        <option value="horse">Horse name</option>
+    </select>
+    <button type="submit" id="form-submit" class="align-center">yeehaw!</button>
+    <p id="form-errors"></p>
+</form>
+
+<% if (searchData.results) { %>
+    <% for (post of searchData.results) { %>
+        <a href="/post/<%= reply %>">
+            <div class="post-mini" post-id="<%= reply %>">
+            </div>
+        </a>
+    <% } %>
+<% } %>
+
+<%- include('../partials/footer') %>

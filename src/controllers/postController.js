@@ -37,7 +37,17 @@ async function getPostShort(req, res, next) {
     }
 }
 
-// todo: maybe make this code more readable
+async function getSearch(req, res, next) {
+    if (!req.authenticated) return res.status(403).redirect('/')
+
+    const searchData = {}
+
+    return res.status(200).render('pages/search', {
+        searchData,
+        sessionData: req.sessionData,
+    })
+}
+
 async function getPostView(req, res, next) {
     if (!req.authenticated) return res.status(403).redirect('/')
 
@@ -144,6 +154,7 @@ async function postEditPost(req, res) {
 
 module.exports = {
     getPostView,
+    getSearch,
     getPostShort,
     getEditPost,
     api: {

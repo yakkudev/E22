@@ -22,6 +22,8 @@ router.post('/horse/:handle/edit', userController.postEditUser)
 router.post('/horse/:handle/delete', userController.postDeleteUser)
 
 // handled by post controller
+router.get('/search', postController.getSearch)
+
 router.get('/post/:post', postController.getPostShort)
 router.get('/horse/:handle/post/:post', postController.getPostView)
 
