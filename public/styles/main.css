@@ -8,7 +8,6 @@
     --secondary: #327632;
     --accent: #70c289;
     --danger: #ff4e4e;
-
 }
 
 body {
@@ -53,7 +52,6 @@ main {
     margin-block: 1rem;
 }
 
-
 a {
     color: var(--accent);
     text-decoration: none;
@@ -64,15 +62,19 @@ a:hover {
 }
 
 .post {
-    background-color: var(--bg);
-    border: 1px solid var(--secondary);
+    font-size: 20px;
+    padding: 0.5rem 1rem 0.25rem 1rem;
+    border-inline: 2px solid var(--secondary);
+    background-color: var(--bg-alt);
+    color: var(--text);
 }
 
 .post-mini {
-    padding: 0.25em 1em;
+    padding: 0.25rem 1rem;
     border-inline: 2px solid var(--secondary);
     background-color: var(--bg);
     color: var(--text);
+    margin-block: 1rem;
 }
 
 .post-mini:hover {
@@ -80,11 +82,21 @@ a:hover {
 
 }
 
+magicform {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+magicform>button {
+    width: fit-content;
+    align-self: flex-end;
+    margin-block: 0.25rem;
+}
+
 .post-form {
     margin-block: 1rem;
-    display: flex;
     width: 100%;
-    justify-content: center;
 }
 
 .post-form textarea {
@@ -127,8 +139,16 @@ button.button-filled {
     color: var(--text);
 }
 
-
 button.button-danger {
     border: 1px solid var(--danger);
     color: var(--danger);
+}
+
+footer {
+    font-family: "Instrument Serif", serif;
+    font-weight: 600;
+    font-style: italic;
+    opacity: 50%;
+    font-size: 16px;
+    text-align: center;
 }

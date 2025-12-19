@@ -1,0 +1,6 @@
+<div class="post-form">
+<magicform action="/api/post/<%= postData.post._id %>/reply" method="POST" onresponse="refresh">
+    <textarea name="content" cols="30" rows="6" placeholder="reply to @<%= postData.user.handle %>"></textarea>
+    <button class="button-filled" type="submit">reply!</button>
+</magicform>
+</div>

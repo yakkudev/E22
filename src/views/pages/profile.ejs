@@ -16,7 +16,7 @@
 
 <% if (user.posts) { %>
     <% for (post of user.posts) { %>
-        <a href="/horse/<%= user.handle %>/post/<%= post %>">
+        <a href="/post/<%= post %>">
             <div class="post-mini" post-id="<%= post %>">
             </div>
         </a>
