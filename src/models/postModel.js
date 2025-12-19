@@ -35,10 +35,6 @@ async function deletePost(postId) {
     return await fromPosts().deleteOne({ _id: new ObjectId(postId) })
 }
 
-async function deletePostsByUser(userId) {
-    return await fromPosts().deleteMany({ userId: new ObjectId(userId) })
-}
-
 async function editPost(postId, content) {
     return await fromPosts().updateOne(
         { _id: new ObjectId(postId) },
@@ -101,6 +97,5 @@ module.exports = {
     newPost,
     editPost,
     deletePost,
-    deletePostsByUser,
     searchPosts,
 }

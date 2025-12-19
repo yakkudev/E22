@@ -1,9 +1,9 @@
 const crypto = require('crypto')
 const { ObjectId } = require('mongodb')
 const { getDB } = require('../data/connection')
-const postModel = require('./postModel')
 
 const fromUsers = () => getDB().collection('users')
+const fromPosts = () => getDB().collection('posts')
 
 const generateSessionToken = () => crypto.randomUUID()
 
@@ -103,7 +103,7 @@ async function newUser({ handle, hashedPassword }) {
 }
 
 async function deleteUser(userId) {
-    await postModel.deletePostsByUser(userId)
+    await fromPosts().deleteMany({ userId: new ObjectId(userId) })
     return await fromUsers().deleteOne({ _id: new ObjectId(userId) })
 }
 
