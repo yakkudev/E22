@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
     --text: #ecebdf;
+    --text-alt: hsl(0, 31%, 30%);
     --bg: #110909;
     --bg-alt: hsl(0, 31%, 10%);
     --primary: #d7d0a2;
@@ -14,6 +15,16 @@ body {
     background-color: var(--bg);
     color: var(--text);
     color-scheme: dark;
+
+    font-family: "Noto Serif", serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+h1,
+h2 {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
 }
 
 nav {
@@ -49,7 +60,9 @@ main {
 }
 
 .profile-header {
-    margin-block: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 a {
@@ -79,7 +92,6 @@ a:hover {
 
 .post-mini:hover {
     background-color: var(--bg-alt);
-
 }
 
 magicform {
@@ -90,7 +102,6 @@ magicform {
 
 magicform>button {
     width: fit-content;
-    align-self: flex-end;
     margin-block: 0.25rem;
 }
 
@@ -106,7 +117,7 @@ magicform>button {
 
     font-size: 16px;
 
-    font-family: 'Arial', sans-serif;
+    font-family: "Noto Serif", serif;
     border: 1px solid var(--secondary);
 
     border-radius: 5px;
@@ -125,13 +136,32 @@ textarea:focus {
     color: var(--danger)
 }
 
+input {
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    border-left: 2px solid var(--secondary);
+    background-color: var(--bg-alt);
+
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    font-family: "Noto Serif", serif;
+}
+
 button {
+    font-family: "Noto Serif", serif;
     background-color: var(--bg);
     border: 1px solid var(--secondary);
     color: var(--text);
     padding: 0.5rem 1rem;
     font-size: large;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
+}
+
+button:disabled {
+    background-color: var(--bg);
+    border: 1px solid var(--bg-alt);
+    color: var(--text-alt);
 }
 
 button.button-filled {
@@ -151,4 +181,18 @@ footer {
     opacity: 50%;
     font-size: 16px;
     text-align: center;
+}
+
+/* ========= */
+
+.align-center {
+    align-self: center;
+}
+
+.align-end {
+    align-self: flex-end;
+}
+
+.align-start {
+    align-self: flex-start;
 }

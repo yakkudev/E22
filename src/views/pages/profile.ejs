@@ -8,10 +8,14 @@
     <form action="/horse/<%= user.handle %>/delete" method="POST">
         <button class="button-danger" type="submit">delete account..</button>
     </form>
-    <%- include('../partials/postForm') %>
 <% } %>
 
 </div>
+
+<% if (sessionData?.userId == user._id) { %>
+    <%- include('../partials/postForm') %>
+<% } %>
+
 <div class="profile-posts">
 
 <% if (user.posts) { %>
