@@ -42,9 +42,60 @@ async function editPost(postId, content) {
     )
 }
 
+async function searchPosts({ handle, phrase, sortBy }) {
+    // https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
+    const pipeline = []
+
+    pipeline.push({
+        $lookup: {
+            from: 'users',
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'user',
+        },
+    })
+    pipeline.push({ $unwind: '$user' })
+
+    // filter by handle
+    if (handle) {
+        pipeline.push({
+            $match: { 'user.handle': { $regex: handle, $options: 'i' } },
+        })
+    }
+
+    // filter by phrase
+    if (phrase) {
+        pipeline.push({
+            $match: { content: { $regex: phrase, $options: 'i' } },
+        })
+    }
+
+    // sort
+
+    // sort by date by ddefualt
+    let sortField = { postDate: -1 }
+    if (sortBy === 'replies') {
+        pipeline.push({
+            $addFields: {
+                replyCount: { $size: { $ifNull: ['$replies', []] } },
+            },
+        })
+        sortField = { replyCount: -1 }
+    } else if (sortBy === 'horse') {
+        sortField = { 'user.handle': 1 }
+    }
+    pipeline.push({ $sort: sortField })
+
+    // ids only
+    pipeline.push({ $project: { _id: 1 } })
+
+    return await fromPosts().aggregate(pipeline).toArray()
+}
+
 module.exports = {
     getPostById,
     newPost,
     editPost,
     deletePost,
+    searchPosts,
 }

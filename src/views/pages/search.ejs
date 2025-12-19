@@ -16,8 +16,8 @@
 
 <% if (searchData.results) { %>
     <% for (post of searchData.results) { %>
-        <a href="/post/<%= reply %>">
-            <div class="post-mini" post-id="<%= reply %>">
+        <a href="/post/<%= post._id %>">
+            <div class="post-mini" post-id="<%= post._id %>">
             </div>
         </a>
     <% } %>

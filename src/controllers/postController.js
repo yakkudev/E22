@@ -41,6 +41,19 @@ async function getSearch(req, res, next) {
     if (!req.authenticated) return res.status(403).redirect('/')
 
     const searchData = {}
+    const handle = req.query?.handle
+    const phrase = req.query?.phrase
+    const sortBy = req.query?.['sort-by'] || 'date'
+
+    try {
+        searchData.results = await postModel.searchPosts({
+            handle,
+            phrase,
+            sortBy,
+        })
+    } catch (error) {
+        searchData.results = []
+    }
 
     return res.status(200).render('pages/search', {
         searchData,

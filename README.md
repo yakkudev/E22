@@ -5,8 +5,7 @@ basically twitter for horses 🐎🐴
 GNU GENERAL PUBLIC LICENSE VERSION 3
 
 # todo:
-- post search: (filters: contents, poster, sort by: poster name, post date, number of replies) 
-- delete session token from footer
+- delete user should also delete all posts
 - database login password
 - good readme
 ## would be nice: 
