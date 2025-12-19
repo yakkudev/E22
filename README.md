@@ -15,10 +15,10 @@ GNU GENERAL PUBLIC LICENSE VERSION 3
 - timeline
 - following other horses
 - delete session token from footer
-- profile edit
 - profile view
 - database login password
-- (optional):
+## (optional):
+- profile edit
 - case insensitive handles
 - bcrypt password hashing & salting
 - profile pictures

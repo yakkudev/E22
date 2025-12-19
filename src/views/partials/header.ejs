@@ -21,5 +21,16 @@
 </head>
 <body>
 <nav>
-    <a href="/">&#x1F434;</a>
+    <a href="/"><h1>&#x1F434; horse</h1></a>
+
+    <div class="nav-right">
+    <% if (sessionData?.token) { %>
+        <a href="/logout">horse out :(</a>
+    <% } else { %>
+        <a href="/register">register...</a>
+        <a href="/login">horse in...</a>
+    <% } %>
+    </div>
 </nav>
+
+<main>

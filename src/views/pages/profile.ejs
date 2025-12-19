@@ -1,14 +1,18 @@
 <%- include('../partials/header') %>
 
+<div class="profile-header">
+
 <h2>@<%= user.handle %></h2>
 
 <% if (sessionData?.userId == user._id) { %>
-    <%- include('../partials/postForm') %>
-
     <form action="/horse/<%= user.handle %>/delete" method="POST">
-        <button type="submit">delete horse..</button>
+        <button class="button-danger" type="submit">delete account..</button>
     </form>
+    <%- include('../partials/postForm') %>
 <% } %>
+
+</div>
+<div class="profile-posts">
 
 <% if (user.posts) { %>
     <% for (post of user.posts) { %>
@@ -19,4 +23,5 @@
     <% } %>
 <% } %>
 
+</div>
 <%- include('../partials/footer') %>

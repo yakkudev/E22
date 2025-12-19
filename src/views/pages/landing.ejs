@@ -1,5 +1,6 @@
 <%- include('../partials/header') %>
 
+<h1>register</h1>
 <magicform action="/api/register" method="POST" onresponse="loginResponse">
     <input type="text" id="handle" name="handle" placeholder="handle" required>
     <input type="password" id="password" name="password" placeholder="password" required>
@@ -7,6 +8,5 @@
     <button type="submit" id="form-submit" disabled>yeehaw</button>
     <p id="form-errors"></p>
 </magicform>
-<a href="/login">horse in...</a>
 
 <%- include('../partials/footer') %>

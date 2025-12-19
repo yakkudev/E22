@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
 :root {
     --text: #ecebdf;
     --bg: #110909;
@@ -5,6 +7,8 @@
     --primary: #d7d0a2;
     --secondary: #327632;
     --accent: #70c289;
+    --danger: #ff4e4e;
+
 }
 
 body {
@@ -12,6 +16,43 @@ body {
     color: var(--text);
     color-scheme: dark;
 }
+
+nav {
+    max-width: 80rem;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 24px;
+}
+
+nav h1 {
+    font-size: 90px;
+    margin: 0;
+}
+
+.nav-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+main {
+    max-width: 60rem;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.profile-header {
+    margin-block: 1rem;
+}
+
 
 a {
     color: var(--accent);
@@ -36,16 +77,20 @@ a:hover {
 
 .post-mini:hover {
     background-color: var(--bg-alt);
+
 }
 
 .post-form {
-    border: 1px solid var(--secondary);
+    margin-block: 1rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
-textarea {
+.post-form textarea {
     width: 100%;
-    height: 150px;
-    padding: 10px;
+    height: 10rem;
+    padding: 1rem;
 
     font-size: 16px;
 
@@ -56,9 +101,8 @@ textarea {
     box-sizing: border-box;
     background-color: var(--bg);
     color: var(--text);
-    resize: vertical;
+    resize: none;
     outline: none;
-    transition: border-color 0.2s ease;
 }
 
 textarea:focus {
@@ -66,5 +110,25 @@ textarea:focus {
 }
 
 #form-errors {
-    color: rgb(255, 78, 78);
+    color: var(--danger)
+}
+
+button {
+    background-color: var(--bg);
+    border: 1px solid var(--secondary);
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    font-size: large;
+    border-radius: 1rem;
+}
+
+button.button-filled {
+    background-color: var(--secondary);
+    color: var(--text);
+}
+
+
+button.button-danger {
+    border: 1px solid var(--danger);
+    color: var(--danger);
 }
