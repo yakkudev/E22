@@ -19,7 +19,7 @@ function loginResponse(data, res) {
     renderErrors(data.errors ?? ['Server error'])
 }
 
-function deletedResponse(data, res) {
+function goHome(data, res) {
     if (res.ok) {
         window.location = '/'
         return

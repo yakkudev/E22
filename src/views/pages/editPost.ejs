@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<% if (postData.post.replyTo) { %>
+    <h3>reply to...</h3>
+    <a href="/post/<%= postData.post.replyTo %>">
+        <div class="post-mini" post-id="<%= postData.post.replyTo %>">
+        </div>
+    </a>
+<% } %>
+
+<div class="post-form">
+<magicform action="/api/post/<%= postData.post._id %>/edit" method="POST" onresponse="goHome">
+    <textarea name="content" placeholder="your thoughts here..."><%= postData.post.content %></textarea>
+    <button class="button-filled" type="submit">update post!</button>
+</magicform>
+</div>
+
+<% if (postData.post.replies) { %>
+    <% for (reply of postData.post.replies) { %>
+        <a href="/post/<%= reply %>">
+            <div class="post-mini" post-id="<%= reply %>">
+            </div>
+        </a>
+    <% } %>
+<% } %>
+
+<%- include('../partials/footer') %>

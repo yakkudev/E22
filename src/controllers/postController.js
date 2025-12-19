@@ -1,10 +1,25 @@
 const postModel = require('../models/postModel')
 const userModel = require('../models/userModel')
 
-const {
-    SESSION_TOKEN_COOKIE,
-    USER_ID_COOKIE,
-} = require('../middleware/sessionManager')
+async function getEditPost(req, res, next) {
+    if (!req.authenticated) return res.status(403).redirect('/')
+    try {
+        const post = await postModel.getPostById(req.params.post)
+        const user = await userModel.getUserById(post.userId)
+
+        if (!user || !post) return next()
+
+        if (!req.user?._id.equals(post.userId))
+            return res.status(403).redirect('/')
+
+        return res.status(200).render('pages/editPost', {
+            postData: { post, user },
+            sessionData: req.sessionData,
+        })
+    } catch (error) {
+        return next()
+    }
+}
 
 async function getPostShort(req, res, next) {
     if (!req.authenticated) return res.status(403).redirect('/')
@@ -59,6 +74,9 @@ async function getPost(req, res) {
 async function postNewPost(req, res) {
     if (!req.authenticated) return res.status(403).json()
 
+    if (!req.body.content || req.body.content?.length === 0)
+        return res.status(400).json()
+
     const post = await postModel.newPost({
         userId: req.user._id,
         content: req.body.content,
@@ -71,6 +89,9 @@ async function postNewPost(req, res) {
 
 async function postReplyPost(req, res) {
     if (!req.authenticated) return res.status(403).json()
+
+    if (!req.body.content || req.body.content?.length === 0)
+        return res.status(400).json()
 
     let replyTo
     try {
@@ -105,13 +126,31 @@ async function postDeletePost(req, res) {
     res.status(200).json()
 }
 
+async function postEditPost(req, res) {
+    if (!req.body.content || req.body.content?.length === 0)
+        return res.status(400).json()
+    try {
+        const post = await postModel.getPostById(req.params.post)
+
+        if (!req.authenticated || !req.user?._id.equals(post?.userId))
+            return res.status(403).json()
+    } catch (error) {
+        return res.status(500).json()
+    }
+
+    await postModel.editPost(req.params.post, req.body.content)
+    res.status(200).json()
+}
+
 module.exports = {
     getPostView,
     getPostShort,
+    getEditPost,
     api: {
         getPost,
         postNewPost,
         postDeletePost,
+        postEditPost,
         postReplyPost,
     },
 }

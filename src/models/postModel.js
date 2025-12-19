@@ -35,8 +35,16 @@ async function deletePost(postId) {
     return await fromPosts().deleteOne({ _id: new ObjectId(postId) })
 }
 
+async function editPost(postId, content) {
+    return await fromPosts().updateOne(
+        { _id: new ObjectId(postId) },
+        { $set: { content } }
+    )
+}
+
 module.exports = {
     getPostById,
     newPost,
+    editPost,
     deletePost,
 }

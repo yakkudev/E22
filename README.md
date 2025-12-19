@@ -6,14 +6,16 @@ GNU GENERAL PUBLIC LICENSE VERSION 3
 
 # todo:
 - search horses
-- make endline work in posts
-- horse buttons when writing posts
 - post interactions
 - timeline
 - following other horses
 - delete session token from footer
 - database login password
+- good readme
 ## (optional):
+- horse buttons when writing posts
+- make endline work in posts
+- go to post after edit
 - profile edit
 - case insensitive handles
 - bcrypt password hashing & salting

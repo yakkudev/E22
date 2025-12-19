@@ -25,7 +25,10 @@ router.post('/horse/:handle/delete', userController.postDeleteUser)
 router.get('/post/:post', postController.getPostShort)
 router.get('/horse/:handle/post/:post', postController.getPostView)
 
+router.get('/post/:post/edit', postController.getEditPost)
+
 router.get('/api/post/:post', postController.api.getPost)
+router.post('/api/post/:post/edit', postController.api.postEditPost)
 router.post('/api/post/:post/reply', postController.api.postReplyPost)
 router.post('/api/post/new', postController.api.postNewPost)
 router.post('/api/post/:post/delete', postController.api.postDeletePost)
