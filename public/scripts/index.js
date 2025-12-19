@@ -10,6 +10,22 @@ function goBack(data, res) {
     }
 }
 
+function loginResponse(data, res) {
+    if (res.ok) {
+        location.reload()
+        return
+    }
+
+    renderErrors(data.errors ?? ['Server error'])
+}
+
+function deletedResponse(data, res) {
+    if (res.ok) {
+        window.location = '/'
+        return
+    }
+}
+
 const handleInput = document.getElementById('handle')
 const passwordInput = document.getElementById('password')
 const passwordConfirmInput = document.getElementById('password-confirm')
@@ -20,15 +36,6 @@ const formErrors = document.getElementById('form-errors')
 handleInput?.addEventListener('change', validateRegister)
 passwordInput?.addEventListener('change', validateRegister)
 passwordConfirmInput?.addEventListener('change', validateRegister)
-
-function loginResponse(data, res) {
-    if (res.ok) {
-        location.reload()
-        return
-    }
-
-    renderErrors(data.errors ?? ['Server error'])
-}
 
 function validatePassword(password) {
     const rules = [

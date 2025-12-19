@@ -9,7 +9,7 @@
 <% } %>
 
 <% if (sessionData?.userId == postData.post.userId) { %>
-    <magicform action="/api/post/<%= postData.post._id %>/delete" method="POST" onresponse="refresh">
+    <magicform action="/api/post/<%= postData.post._id %>/delete" method="POST" onresponse="deletedResponse">
         <button class="button-danger" type="submit">delete post</button>
     </magicform>
 <% } %>
