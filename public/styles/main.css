@@ -183,6 +183,25 @@ footer {
     text-align: center;
 }
 
+.huge-text {
+    font-family: "Instrument Serif", serif;
+    font-weight: 600;
+    font-style: italic;
+    opacity: 70%;
+    font-size: 250px;
+    text-align: center;
+    margin-bottom: 30rem;
+}
+
+.huge-text>* {
+    margin: 0;
+}
+
+.huge-text p {
+    font-size: 50px;
+    opacity: 50%;
+}
+
 /* ========= */
 
 .align-center {

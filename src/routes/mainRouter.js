@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
 const postController = require('../controllers/postController')
+const errorController = require('../controllers/errorController')
 
 // handled by user controller
 router.get('/', userController.getRoot)
@@ -29,15 +30,8 @@ router.post('/api/post/:post/reply', postController.api.postReplyPost)
 router.post('/api/post/new', postController.api.postNewPost)
 router.post('/api/post/:post/delete', postController.api.postDeletePost)
 
-// error 500
-router.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send('Something broke')
-})
-
-// error 404
-router.use((req, res, next) => {
-    res.status(404).send('Not found')
-})
+// errors
+router.use(errorController.err)
+router.use(errorController.notFound)
 
 module.exports = router
