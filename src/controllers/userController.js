@@ -19,12 +19,27 @@ async function getRoot(req, res) {
 }
 
 async function getRegister(req, res) {
+    if (req.authenticated) return res.status(300).redirect('/')
     res.status(200).render('pages/landing', { sessionData: null })
 }
 
+async function getLogin(req, res) {
+    if (req.authenticated) return res.status(300).redirect('/')
+    res.status(200).render('pages/login', { sessionData: null })
+}
+
 async function postRegister(req, res) {
+    const handle = req.body?.handle
+    const password = req.body?.password
+    let result = await userModel.validateHandle(handle)
+    if (!password)
+        result.errors = [...(result.errors ?? []), 'Password not provided']
+    if (result.errors) return res.status(400).json({ errors: result.errors })
+
+    const hashedPassword = userModel.hashPassword(password)
+
     userModel
-        .newUser({ handle: req.body.handle })
+        .newUser({ handle, hashedPassword })
         .then(async (result) => {
             const user = await userModel.getUserByIdRisky(result.insertedId)
             console.log('created new horse:', JSON.stringify(user))
@@ -32,26 +47,41 @@ async function postRegister(req, res) {
             res.cookie(SESSION_TOKEN_COOKIE, user.session, cookieSettings)
             res.cookie(USER_ID_COOKIE, user._id, cookieSettings)
 
-            res.status(300).redirect('/')
+            res.status(200).json({})
         })
-        .catch((error) => res.status(300).redirect('/register'))
-}
-
-async function getLogin(req, res) {
-    res.status(200).render('pages/login', { sessionData: null })
+        .catch((error) => res.status(400).json({ errors: [error] }))
 }
 
 async function postLogin(req, res) {
-    let user = await userModel.getUserByHandle(req.body.handle)
-    if (!user) {
-        return res.status(300).redirect('/login')
+    let errors = []
+    const handle = req.body?.handle
+    const password = req.body?.password
+
+    if (!handle) errors = [...errors, 'Handle not provided']
+    if (!password) errors = [...errors, 'Password not provided']
+
+    if (errors.length) return res.status(400).json({ errors })
+
+    const hashedPassword = userModel.hashPassword(password)
+    let user = await userModel.getUserByHandleRisky(handle)
+    if (!user || user?.hashedPassword !== hashedPassword) {
+        errors = [...errors, 'Invalid handle or password']
     }
+    if (errors.length) return res.status(400).json({ errors })
 
     await userModel.resetUserSession(user._id)
     user = await userModel.getUserByIdRisky(user._id)
     res.cookie(SESSION_TOKEN_COOKIE, user.session, cookieSettings)
     res.cookie(USER_ID_COOKIE, user._id, cookieSettings)
-    res.status(300).redirect('/')
+    res.status(200).json()
+}
+
+async function postValidateHandle(req, res) {
+    const handle = req.body?.handle
+    const result = await userModel.validateHandle(handle)
+    if (result.errors) return res.status(400).json({ errors: result.errors })
+
+    return res.status(200).json()
 }
 
 async function getLogout(req, res) {
@@ -99,11 +129,14 @@ async function postDeleteUser(req, res) {
 }
 
 module.exports = {
+    api: {
+        postRegister,
+        postLogin,
+        postValidateHandle,
+    },
     getRoot,
     getRegister,
-    postRegister,
     getLogin,
-    postLogin,
     getLogout,
     getProfile,
     getEditUser,

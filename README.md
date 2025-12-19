@@ -1,18 +1,15 @@
 # E22
 basically twitter for horses 🐎🐴
 
-# known issues
-cross site scripting vulnerabilities
-
 # LICENSE
 GNU GENERAL PUBLIC LICENSE VERSION 3
 
 # todo:
-- user handle validation
 - replies
 - search horses
-- password validation
 - custom error pages
+- make endline work in posts
+- horse buttons when writing posts
 - proper post view
 - post interactions
 - timeline
@@ -22,6 +19,9 @@ GNU GENERAL PUBLIC LICENSE VERSION 3
 - profile view
 - database login password
 - (optional):
+- case insensitive handles
+- bcrypt password hashing & salting
 - profile pictures
 - horsing around
 - horse sfx
+- bundle frontend

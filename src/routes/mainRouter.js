@@ -6,10 +6,12 @@ const postController = require('../controllers/postController')
 // handled by user controller
 router.get('/', userController.getRoot)
 router.get('/register', userController.getRegister)
-router.post('/register', userController.postRegister)
 router.get('/login', userController.getLogin)
-router.post('/login', userController.postLogin)
 router.get('/logout', userController.getLogout)
+
+router.post('/api/validate-handle', userController.api.postValidateHandle)
+router.post('/api/register', userController.api.postRegister)
+router.post('/api/login', userController.api.postLogin)
 
 router.get('/horse/:handle', userController.getProfile)
 

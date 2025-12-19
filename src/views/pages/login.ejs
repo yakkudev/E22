@@ -1,9 +1,10 @@
 <%- include('../partials/header') %>
 
-<form action="/login" method="POST">
-    <input type="text" name="handle" placeholder="handle" required>
+<magicform action="/api/login" method="POST" onresponse="loginResponse">
+    <input type="text" name="handle" placeholder="handle">
     <input type="password" name="password" placeholder="password">
-    <button type="submit">horse in...</button>
-</form>
+    <button type="submit" id="form-submit">horse in...</button>
+    <p id="form-errors"></p>
+</magicform>
 
 <%- include('../partials/footer') %>

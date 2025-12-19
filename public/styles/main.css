@@ -41,3 +41,30 @@ a:hover {
 .post-form {
     border: 1px solid var(--secondary);
 }
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+
+    font-size: 16px;
+
+    font-family: 'Arial', sans-serif;
+    border: 1px solid var(--secondary);
+
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: var(--bg);
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+textarea:focus {
+    border-color: var(--accent);
+}
+
+#form-errors {
+    color: rgb(255, 78, 78);
+}
