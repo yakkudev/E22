@@ -48,6 +48,7 @@ basically twitter for horses 🐎🐴 (without most of the features)
 - EJS
 - Preact
 - Docker
+- Twemoji for the horse emoji
 
 ## Prerequisites
 - Node.js
@@ -62,6 +63,7 @@ docker compose up
 ```
 
 ## Running the dev environment
+clone and npm install
 ```
 git clone https://github.com/yakkudev/E22.git
 cd E22
@@ -84,4 +86,5 @@ me [(dominik brewka)](https://github.com/yakkudev)
 
 # LICENSE
 GNU GENERAL PUBLIC LICENSE VERSION 3
+
 check out [LICENSE](./LICENSE) for more info
